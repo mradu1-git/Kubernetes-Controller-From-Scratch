@@ -33,7 +33,19 @@ type EC2InstanceSpec struct {
 
 	// foo is an example field of EC2Instance. Edit ec2instance_types.go to remove/update
 	// +optional
-	Foo *string `json:"foo,omitempty"`
+	Foo               string            `json:"foo,omitempty"`
+	AmiId             string            `json:"amiId"`
+	SshKey            string            `json:"sshKey"`
+	InstanceType      string            `json:"InstanceType"`
+	Subnet            string            `json:"subnet"`
+	Tags              map[string]string `json:"tags,omitempty"`
+	Storage           StorageConfig     `json:"storage"`
+	AdditionalStorage []StorageConfig   `json:"additionalStorage,omitempty"`
+}
+
+type StorageConfig struct {
+	VolumeSize int    `json:"volumeSize"`
+	VolumeType string `json:"volumeType"`
 }
 
 // EC2InstanceStatus defines the observed state of EC2Instance.
@@ -53,10 +65,15 @@ type EC2InstanceStatus struct {
 	// - "Degraded": the resource failed to reach or maintain its desired state
 	//
 	// The status of each condition is one of True, False, or Unknown.
-	// +listType=map
-	// +listMapKey=type
 	// +optional
-	Conditions []metav1.Condition `json:"conditions,omitempty"`
+	// +optional
+	Phase string `json:"phase,omitempty"`
+
+	// +optional
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// +optional
+	PublicIp string `json:"publicIp,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -72,7 +89,7 @@ type EC2Instance struct {
 
 	// spec defines the desired state of EC2Instance
 	// +required
-	Spec EC2InstanceSpec `json:"spec"`
+	Spec EC2InstanceSpec `json:"spec,omitempty"`
 
 	// status defines the observed state of EC2Instance
 	// +optional
