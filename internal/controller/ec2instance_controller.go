@@ -18,11 +18,11 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
 	computev1 "github.com/mradu1-git/Kubernetes-Controller-From-Scratch/api/v1"
 )
@@ -47,9 +47,20 @@ type EC2InstanceReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.24.1/pkg/reconcile
 func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = logf.FromContext(ctx)
+	//_ = logf.FromContext(ctx)
 
 	// TODO(user): your logic here
+	ec2InstanceObject := &computev1.EC2Instance{}
+	r.Get(ctx, req.NamespacedName, ec2InstanceObject)
+
+	fmt.Println("I got a request for ec2Instance", req.Namespace, "with name", req.Name)
+	fmt.Println("Instance name is: ", ec2Instance.Spec.InstanceName)
+	fmt.Println("Instance type is: ", ec2Instance.Spec.InstanceType)
+	fmt.Println("AMI ID is: ", ec2Instance.Spec.AmiId)
+	fmt.Println("SSH Key is: ", ec2Instance.Spec.SshKey)
+	fmt.Println("Storage is: ", ec2Instance.Spec.Storage.VolumeSize, "GB", ec2Instance.Spec.Storage.VolumeType)
+
+	l.Info("Reconciling EC2Instance", "EC2Instance.Namespace", ec2InstanceObject.Namespace, "EC2Instance.Name", ec2InstanceObject.Name)
 
 	return ctrl.Result{}, nil
 }
