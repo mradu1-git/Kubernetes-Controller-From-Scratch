@@ -25,28 +25,22 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // EC2InstanceSpec defines the desired state of EC2Instance
+// EC2InstanceSpec defines the desired state of EC2Instance
 type EC2InstanceSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	// The following markers will use OpenAPI v3 schema to validate the value
-	// More info: https://book.kubebuilder.io/reference/markers/crd-validation.html
-
-	// foo is an example field of EC2Instance. Edit ec2instance_types.go to remove/update
-	// +optional
-	Foo               string            `json:"foo,omitempty"`
-	AmiId             string            `json:"amiId"`
-	SshKey            string            `json:"sshKey"`
-	InstanceType      string            `json:"InstanceType"`
+	// Notice the lowerCamelCase in json tags
+	InstanceType      string            `json:"instanceType"`
+	AmiID             string            `json:"amiId"`
+	InstanceName      string            `json:"instanceName"`
+	SSHKey            string            `json:"sshKey"`
 	Subnet            string            `json:"subnet"`
 	Tags              map[string]string `json:"tags,omitempty"`
 	Storage           StorageConfig     `json:"storage"`
 	AdditionalStorage []StorageConfig   `json:"additionalStorage,omitempty"`
-	InstanceName      string            `json:"instanceName"`
 }
 
 type StorageConfig struct {
-	VolumeSize int    `json:"volumeSize"`
-	VolumeType string `json:"volumeType"`
+	Size int    `json:"size"`
+	Type string `json:"type"`
 }
 
 // EC2InstanceStatus defines the observed state of EC2Instance.

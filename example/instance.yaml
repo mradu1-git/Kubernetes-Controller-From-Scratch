@@ -1,0 +1,21 @@
+apiVersion: compute.cloud.com/v1
+kind: EC2Instance
+metadata:
+  name: kuberenets-object-for-ec2
+spec:
+  amiId: "ami-484739adndf8"
+  sshKey: "my-ssh-key"
+  instanceType: "t3.medium" # Capital 'I' to match CRD output
+  subnet: "example-subnet"
+  instanceName: "my-ec2-instance"
+  tags:
+    environment: "dev"
+    owner: "alice"
+  storage:
+    size: 50              # Capitalized if missing json tags in Go
+    type: "gp2"
+  additionalStorage:
+    - size: 100
+      type: "io1"
+    - size: 50
+      type: "st1"

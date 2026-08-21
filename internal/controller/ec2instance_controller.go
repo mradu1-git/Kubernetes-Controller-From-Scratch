@@ -23,6 +23,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	computev1 "github.com/mradu1-git/Kubernetes-Controller-From-Scratch/api/v1"
 )
@@ -47,21 +48,19 @@ type EC2InstanceReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.24.1/pkg/reconcile
 func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	//_ = logf.FromContext(ctx)
+	l := log.FromContext(ctx)
 
 	// TODO(user): your logic here
-	ec2InstanceObject := &computev1.EC2Instance{}
-	r.Get(ctx, req.NamespacedName, ec2InstanceObject)
-
+	ec2Instance := &computev1.EC2Instance{}
+	r.Get(ctx, req.NamespacedName, ec2Instance)
+	l.Info("Reconciling EC2Instance", "EC2Instance.Namespace", ec2Instance.Namespace, "EC2Instance.Name", ec2Instance.Name)
 	fmt.Println("I got a request for ec2Instance", req.Namespace, "with name", req.Name)
-	fmt.Println("Instance name is: ", ec2InstanceObject.Spec.InstanceName)
-	fmt.Println("Instance type is: ", ec2InstanceObject.Spec.InstanceType)
-	fmt.Println("AMI ID is: ", ec2InstanceObject.Spec.AmiId)
-	fmt.Println("SSH Key is: ", ec2InstanceObject.Spec.SshKey)
-	fmt.Println("Storage is: ", ec2InstanceObject.Spec.Storage.VolumeSize, "GB", ec2InstanceObject.Spec.Storage.VolumeType)
-
-	//l.Info("Reconciling EC2Instance", "EC2Instance.Namespace", ec2InstanceObject.Namespace, "EC2Instance.Name", ec2InstanceObject.Name)
-
+	fmt.Println("Instance name is: ", ec2Instance.Spec.InstanceName)
+	fmt.Println("Instance type is: ", ec2Instance.Spec.InstanceType)
+	fmt.Println("AMI ID is: ", ec2Instance.Spec.AmiID)
+	fmt.Println("SSH Key is: ", ec2Instance.Spec.SSHKey)
+	fmt.Println("Storage is: ", ec2Instance.Spec.Storage.Size, "GB", ec2Instance.Spec.Storage.Type)
+	l.Info("Reconcilled EC2Instance", "EC2Instance.Namespace", ec2Instance.Namespace, "EC2Instance.Name", ec2Instance.Name)
 	return ctrl.Result{}, nil
 }
 

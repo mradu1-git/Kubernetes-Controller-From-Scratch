@@ -39,39 +39,36 @@ spec:
           spec:
             description: spec defines the desired state of EC2Instance
             properties:
-              InstanceType:
-                type: string
               additionalStorage:
                 items:
                   properties:
-                    volumeSize:
+                    size:
                       type: integer
-                    volumeType:
+                    type:
                       type: string
                   required:
-                  - volumeSize
-                  - volumeType
+                  - size
+                  - type
                   type: object
                 type: array
               amiId:
                 type: string
-              foo:
-                description: foo is an example field of EC2Instance. Edit ec2instance_types.go
-                  to remove/update
-                type: string
               instanceName:
+                type: string
+              instanceType:
+                description: Notice the lowerCamelCase in json tags
                 type: string
               sshKey:
                 type: string
               storage:
                 properties:
-                  volumeSize:
+                  size:
                     type: integer
-                  volumeType:
+                  type:
                     type: string
                 required:
-                - volumeSize
-                - volumeType
+                - size
+                - type
                 type: object
               subnet:
                 type: string
@@ -80,9 +77,9 @@ spec:
                   type: string
                 type: object
             required:
-            - InstanceType
             - amiId
             - instanceName
+            - instanceType
             - sshKey
             - storage
             - subnet
