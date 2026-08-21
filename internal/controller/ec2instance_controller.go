@@ -54,13 +54,13 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	r.Get(ctx, req.NamespacedName, ec2InstanceObject)
 
 	fmt.Println("I got a request for ec2Instance", req.Namespace, "with name", req.Name)
-	fmt.Println("Instance name is: ", ec2Instance.Spec.InstanceName)
-	fmt.Println("Instance type is: ", ec2Instance.Spec.InstanceType)
-	fmt.Println("AMI ID is: ", ec2Instance.Spec.AmiId)
-	fmt.Println("SSH Key is: ", ec2Instance.Spec.SshKey)
-	fmt.Println("Storage is: ", ec2Instance.Spec.Storage.VolumeSize, "GB", ec2Instance.Spec.Storage.VolumeType)
+	fmt.Println("Instance name is: ", ec2InstanceObject.Spec.InstanceName)
+	fmt.Println("Instance type is: ", ec2InstanceObject.Spec.InstanceType)
+	fmt.Println("AMI ID is: ", ec2InstanceObject.Spec.AmiId)
+	fmt.Println("SSH Key is: ", ec2InstanceObject.Spec.SshKey)
+	fmt.Println("Storage is: ", ec2InstanceObject.Spec.Storage.VolumeSize, "GB", ec2InstanceObject.Spec.Storage.VolumeType)
 
-	l.Info("Reconciling EC2Instance", "EC2Instance.Namespace", ec2InstanceObject.Namespace, "EC2Instance.Name", ec2InstanceObject.Name)
+	//l.Info("Reconciling EC2Instance", "EC2Instance.Namespace", ec2InstanceObject.Namespace, "EC2Instance.Name", ec2InstanceObject.Name)
 
 	return ctrl.Result{}, nil
 }
